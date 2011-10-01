@@ -27,7 +27,7 @@
   You can restrict the instances from doing things based on role:
   
     def administrate
-      if @user.role ## :admin
+      if @user.role == :admin
         administer
       end
     end
