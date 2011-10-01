@@ -10,6 +10,7 @@
     gem install reuse
 
   Now to incorporate it into a model:
+  
     require 'reuse'
 
     class User
@@ -23,6 +24,7 @@
     end
 
   You can restrict the instances from doing things based on role:
+  
     def administrate
       if @user.role ## :admin
         administer
@@ -30,6 +32,7 @@
     end
 
   Or based on their actions:
+  
     def do_something_risky
       if @user.can?(:do_this)
         do_it
@@ -37,6 +40,7 @@
         tell_them_to_get_out!
       end
     end
+    
 ##Issues?
   Please don't hesitate to open up an issue. You can even contribute! Which
   brings me to...
