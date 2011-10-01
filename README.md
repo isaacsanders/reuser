@@ -7,6 +7,7 @@
   ReUse is an Internal DSL for Ruby to create roles and manage actions.
 ##Usage
   Installing ReUse is easy:
+  
     gem install reuse
 
   Now to incorporate it into a model:
