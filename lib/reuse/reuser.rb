@@ -1,5 +1,11 @@
 require_relative(reuse_file = '../reuse')
 
+# Look into ActiveSupport::Concern for a more modern module inclusion pattern
+# http://rubydoc.info/docs/rails/ActiveSupport/Concern
+# It's cleaner and definitely preferred.
+
+# Where are the roles listed? Is there an app-wide key that shows what roles are available?
+
 module ReUser
   instance_eval do
     def included(subclass)
@@ -10,6 +16,10 @@ module ReUser
           @@roles.keys
         end
 
+        # Perhaps my preference, but I like to see block parameters listed as `&block`
+        # What is the point of `yield(new role)`? I don't think that actually does anything
+        # I would rewrite this as:
+        # @@roles[name] = Role.new(name)
         def role(name, &actions)
           new_role = Role.new(name)
           yield(new_role)
@@ -27,6 +37,8 @@ module ReUser
       subclass.class_eval do
         attr_reader :role
 
+        # Don't confuse accessors with instance variables
+        # I don't exactly follow what is happening here?
         def initialize(role = :default)
           unless @role = @@roles[role.to_sym]
             if role == :default
@@ -36,6 +48,7 @@ module ReUser
           end
         end
 
+        # All you need to write here is `@role.actions.has_key?(name)`
         def can?(name)
           if @role.actions[name]
             true
@@ -46,6 +59,9 @@ module ReUser
       end
     end
   end
+
+# Another usual preference is to declare custom error classes at the top of the
+# containing class. Also watch the indenting.
 class NoRoleError < StandardError; end;
 class NoDefaultRoleError < StandardError; end;
 end
