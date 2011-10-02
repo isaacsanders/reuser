@@ -22,6 +22,15 @@ describe "Class TestReUser" do
       methods.include?(:roles).should == true
     end
 
+    # Just nit picking, but it seems the block parameter should not be needed.
+    # If I were using this lib, I'd expect to declare permissions as
+    # `role :employee, :except => [:destroy]` 
+    # -or-
+    # `role :user, :only => [:index, :show]`
+    # Admin users should automatically be granted all actions across the app.
+    # I'm not sure what would need to change in your code to make this happen,
+    # but its more in line with what is out there.
+    
     it "should be able to define roles" do
       TestReUser.class_eval do
         roles do
