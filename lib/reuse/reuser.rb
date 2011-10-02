@@ -1,6 +1,8 @@
 require_relative(reuse_file = '../reuse')
 
 module ReUser
+  class NoRoleError < StandardError; end;
+  class NoDefaultRoleError < StandardError; end;
   instance_eval do
     def included(subclass)
       subclass.instance_eval do
@@ -45,6 +47,4 @@ module ReUser
       end
     end
   end
-class NoRoleError < StandardError; end;
-class NoDefaultRoleError < StandardError; end;
 end
