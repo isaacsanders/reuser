@@ -12,7 +12,7 @@ describe "Class TestReUser" do
   end
 
   context "has included the ReUser module" do
-    before do
+    before :each do
       class TestReUser; include ReUser; end
     end
 
@@ -22,7 +22,7 @@ describe "Class TestReUser" do
       methods.include?(:roles).should == true
     end
 
-    it "should be able to define roles" do
+    it "should be able to define roles with blocks" do
       TestReUser.class_eval do
         roles do
           role(:admin) {|r| r.actions(:read, :write, :execute)}
@@ -31,6 +31,17 @@ describe "Class TestReUser" do
       end
 
       TestReUser.roles.should == [:admin, :user]
+    end
+
+    it "should be able to define roles with arrays" do
+      TestReUser.class_eval do
+        roles do
+          role(:admin, [:read, :write, :execute])
+        end
+      end
+
+      test_ru = TestReUser.new(:admin)
+      test_ru.can?(:read).should == true
     end
 
     context "has defined the :admin and :user roles," do
@@ -42,6 +53,7 @@ describe "Class TestReUser" do
           end
         end
       end
+
 
 
       context "is instantiated as test_ru" do

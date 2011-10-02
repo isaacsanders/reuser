@@ -10,9 +10,12 @@ module ReUser
           @@roles.keys
         end
 
-        def role(name, &actions)
+        def role(name, actions_list = [], &block)
           new_role = Role.new(name)
-          yield(new_role)
+          yield(new_role) if block
+          unless actions_list.empty?
+            new_role.actions(*actions_list)
+          end
           @@roles[name] = new_role
         end
 
@@ -37,11 +40,7 @@ module ReUser
         end
 
         def can?(name)
-          if @role.actions[name]
-            true
-          else
-            false
-          end
+          @role.actions.has_key?(name)
         end
       end
     end
