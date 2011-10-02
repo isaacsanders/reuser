@@ -7,6 +7,7 @@
   ReUse is an Internal DSL for Ruby to create roles and manage actions.
 ##Usage
   Installing ReUse is easy:
+  
     gem install reuse
 
   Now to incorporate it into a model:
@@ -26,7 +27,7 @@
   You can restrict the instances from doing things based on role:
   
     def administrate
-      if @user.role ## :admin
+      if @user.role == :admin
         administer
       end
     end

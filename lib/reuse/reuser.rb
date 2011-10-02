@@ -33,7 +33,7 @@ module ReUser
         def initialize(role = :default)
           unless @role = @@roles[role.to_sym]
             if role == :default
-              raise NoDefaultRoleError, "No default role is set for #{self}"
+              raise NoDefaultRoleError, "No default role is declared for #{self}"
             end
             raise NoRoleError, "#{role} is not a declared role for #{self}"
           end
