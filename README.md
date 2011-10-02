@@ -18,8 +18,12 @@
       include ReUser
 
       roles do
+        # You can declare roles with a block syntax...
+        
         role(:admin) {|r| r.actions(:read, :write, :execute)}
         role(:user) {|r| r.action(:read)}
+        # Or you can declare your role like this:
+        role(:mod, [:delete, :ban])
         default :user
       end
     end
