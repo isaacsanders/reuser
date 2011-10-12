@@ -18,13 +18,33 @@
       include ReUser
 
       roles do
-        role(:admin).can :read, :write, :execute
-        role :user do |usr|
+
+        # declare a role with the can method, taking a list of actions.
+        role(:admin).can :read, :write, :execute 
+
+        role :user do |usr| # pass a block, so you can
           usr.can :read
-          usr.could :write {|obj| usr.owns?(obj)}
-          usr.cant :execute
+
+          # declare a role, then declare a conditional action with could.
+          # could takes a list of names, then assigns a test to them.
+          # You can then ask your model:
+          ##usr.could?(:write, 'un-owned-file')
+          ###=> false
+          # or
+          ##usr.could?(:write, 'owned-file')
+          ###=> true
+          # could? will pass the second argument as the block's argument'
+
+          usr.could :write do |file|
+            usr.owns? file
+          end
         end
+
+        # Or you can declare a role with the name, followed by an array of names
         role :writer, [:read, :write]
+
+        # Then, you can declare a default, accessible by storing :default as
+        # your model's role, it will point to original role.
         default :user
       end
     end
