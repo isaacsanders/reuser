@@ -1,77 +1,58 @@
 require 'rspec'
-require_relative '../reuse'
+require 'pry'
+require_relative '../reuser'
 
-describe "Class TestReUser" do
-  context "has not included the ReUser module" do
-    it "should not have ReUser methods" do
-      class TestReUser; end
-      methods = TestReUser.public_methods - Object.public_methods
-      methods.include?(:role).should == false
-      methods.include?(:roles).should == false
+class TestReUser
+  include ReUser
+
+  roles do
+    role(:admin).can(:read, :write, :execute)
+    role(:user) do |usr|
+      usr.can :read
+
+      usr.could :execute, :read do |obj|
+        obj == 1
+      end
     end
+    role :writer, :write
+    role :sysadmin, [:write, :execute]
+    default(:user)
   end
 
+  def initialize(name = :default)
+    @role = role(name)
+  end
+end
+REUSER_METHODS = [:roles,
+                  :role,
+                  :role?,
+                  :default,
+                  :can?,
+                  :cant?,
+                  :could?,
+                  :couldnt?].sort
+
+describe TestReUser do
   context "has included the ReUser module" do
-    before :each do
-      class TestReUser; include ReUser; end
-    end
-
-    it "should have the ReUser methods" do
-      methods = TestReUser.public_methods - Object.public_methods
-      methods.include?(:role).should == true
-      methods.include?(:roles).should == true
-    end
-
     it "should be able to define roles with blocks" do
-      TestReUser.class_eval do
-        roles do
-          role(:admin) {|r| r.actions(:read, :write, :execute)}
-          role(:user) {|r| r.action(:read)}
-        end
-      end
-
-      TestReUser.roles.should == [:admin, :user]
+      test_ru = TestReUser.new(:admin)
+      test_ru.can?(:read).should == true
     end
 
     it "should be able to define roles with arrays" do
-      TestReUser.class_eval do
-        roles do
-          role(:admin, [:read, :write, :execute])
-        end
-      end
-
       test_ru = TestReUser.new(:admin)
       test_ru.can?(:read).should == true
     end
 
     context "has defined the :admin and :user roles," do
-      before do
-        TestReUser.class_eval do
-          roles do
-            role(:admin) {|r| r.actions(:read, :write, :execute)}
-            role(:user) {|r| r.action(:read)}
-          end
-        end
-      end
-
-
-
       context "is instantiated as test_ru" do
         context "set :user to the default" do
           before do
-            TestReUser.class_eval do
-              roles do
-                default(:user)
-              end
-            end
-
             @test_ru = TestReUser.new
           end
-
           context " using the default role" do
-
             it "should not be able to write" do
-              @test_ru.can?(:write).should_not == true
+              @test_ru.cant?(:write).should == true
             end
 
             it "should be able to read" do
@@ -93,13 +74,17 @@ describe "Class TestReUser" do
               lambda {@test_ru.foo}.should raise_error(InsufficientPermissionsError)
             end
           end
+
+          it "should be able to execute on a 1 object." do
+            @test_ru.could?(:execute, 1).should == true
+            @test_ru.couldnt?(:execute, 3).should == true
+          end
         end
 
         context "set role to :admin" do
           before do
-            @test_ru = TestReUser.new(:admin)
+            @test_ru = TestReUser.new :admin
           end
-
           it "should be able to read, write, and execute" do
             @test_ru.can?(:read).should == true
             @test_ru.can?(:write).should == true
