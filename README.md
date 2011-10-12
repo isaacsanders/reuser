@@ -1,25 +1,30 @@
-#ReUse
+#ReUser
 ##Purpose
   Whenever you start a web app where a user has specific permissions, do you
   end up writing your own solution or using something that has brain-bending
-  abstractions? If so, ReUse is the solution for you.
+  abstractions? If so, ReUser is the solution for you.
 ##Description
-  ReUse is an Internal DSL for Ruby to create roles and manage actions.
+  ReUser is an Internal DSL for Ruby to create roles and manage actions.
 ##Usage
-  Installing ReUse is easy:
+  Installing ReUser is easy:
   
-    gem install reuse
+    gem install reuser
 
   Now to incorporate it into a model:
   
-    require 'reuse'
+    require 'reuser'
 
     class User
       include ReUser
 
       roles do
-        role(:admin) {|r| r.actions(:read, :write, :execute)}
-        role(:user) {|r| r.action(:read)}
+        role(:admin).can :read, :write, :execute
+        role :user do |usr|
+          usr.can :read
+          usr.could :write {|obj| usr.owns?(obj)}
+          usr.cant :execute
+        end
+        role :writer, [:read, :write]
         default :user
       end
     end
@@ -27,7 +32,7 @@
   You can restrict the instances from doing things based on role:
   
     def administrate
-      if @user.role == :admin
+      if @user.role? :admin
         administer
       end
     end
@@ -39,6 +44,14 @@
         do_it
       else
         tell_them_to_get_out!
+      end
+    end
+
+    def do_something_with_obj
+      if @user.could?(:write, file)
+        write file
+      else
+        raise 'Not your file!'
       end
     end
     
@@ -57,3 +70,6 @@
 
   Following these will let us get along and make better software, quicker, and
   with less bugs.(hypothetically)
+
+  I am still working on the final syntax, but we are getting closer. If you
+  have any suggestions on syntax, open a feature require
