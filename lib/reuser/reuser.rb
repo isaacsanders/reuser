@@ -34,35 +34,24 @@ module ReUser
       end
       subclass.class_eval do
 
-        def role(name = nil)
-          if name
-            if @@roles[name]
-              @role = @@roles[name]
-            else
-              raise NoRoleError, "No role #{name} defined for #{self}"
-            end
-          end
-          @role
-        end
-
         def role?(name)
-          role == self.class.role(name)
+          @role == self.class.role(name)
         end
 
         def can?(name)
-          !!role.can?(name)
+          !!@role.can?(name)
         end
 
         def cant?(name)
-          !role.can?(name)
+          !@role.can?(name)
         end
 
         def could?(name, obj)
-          role.could?(name, obj)
+          @role.could?(name, obj)
         end
 
         def couldnt?(name, obj)
-          !role.could?(name, obj)
+          !@role.could?(name, obj)
         end
       end
     end

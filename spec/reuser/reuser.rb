@@ -20,7 +20,7 @@ class TestReUser
   end
 
   def initialize(name = :default)
-    @role = role(name)
+    @role = TestReUser.role(name)
   end
 end
 REUSER_METHODS = [:roles,
