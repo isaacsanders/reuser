@@ -25,7 +25,7 @@ module ReUser
     end
 
     def could?(name, data)
-      @actions[name].call(data)
+      @actions[name] == Proc ? @actions[name].call(data) : true
     end
 
     private
