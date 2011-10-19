@@ -6,7 +6,6 @@ module ReUser
   instance_eval do
     def included(subclass)
       subclass.instance_eval do
-        @@roles = {}
         def roles(&block)
           @@roles ||= {}
           yield if block
@@ -34,24 +33,24 @@ module ReUser
       end
       subclass.class_eval do
 
-        def role?(name)
-          @role == self.class.role(name)
+        def role?(action)
+          @role == self.class.role(action)
         end
 
-        def can?(name)
-          !!@role.can?(name)
+        def can?(action)
+          !!@role.can?(action)
         end
 
-        def cant?(name)
-          !@role.can?(name)
+        def cant?(action)
+          !@role.can?(action)
         end
 
-        def could?(name, obj)
-          @role.could?(name, obj)
+        def could?(action, obj)
+          !!@role.could?(action, obj)
         end
 
-        def couldnt?(name, obj)
-          !@role.could?(name, obj)
+        def couldnt?(action, obj)
+          !@role.could?(action, obj)
         end
       end
     end

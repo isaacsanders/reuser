@@ -5,13 +5,12 @@ module ReUser
     attr_reader :actions
 
     def initialize(name)
+      @name = name
       @actions = {}
     end
 
     def can(*names)
-      names.each do |name|
-        action(name)
-      end
+      actions(*names)
     end
 
     def can?(name)
@@ -25,7 +24,7 @@ module ReUser
     end
 
     def could?(name, data)
-      @actions[name] == Proc ? @actions[name].call(data) : true
+      actions[name].is_a?(Proc) ? actions[name].call(data) : true
     end
 
     private

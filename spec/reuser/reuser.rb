@@ -10,7 +10,7 @@ class TestReUser
     role(:user) do |usr|
       usr.can :read
 
-      usr.could :execute, :read do |obj|
+      usr.could :execute do |obj|
         obj == 1
       end
     end
