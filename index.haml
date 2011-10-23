@@ -1,0 +1,45 @@
+!!!5
+%html
+  %head
+    %link(href="http://fonts.googleapis.com/css?family=Quicksand|Federant|Cedarville+Cursive" rel="stylesheet" type="text/css")
+    %link(rel="stylesheet" type="text/css" href="public/GGS.css")
+    %link(rel="stylesheet" type="text/css" href="public/style.css")
+    %meta(charset="utf-8")
+    %meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
+    %meta(name="viewport" content="width=device-width initial-scale=1")
+    %script(src="http://code.jquery.com/jquery-1.6.4.min.js")
+    %script(src="http://cdnjs.cloudflare.com/ajax/libs/noisy/1.0/jquery.noisy.min.js")
+    %script(src="https://raw.github.com/jonikorpi/Golden-Grid-System/master/GGS.js")
+    %script(src="public/app.js")
+    %title ReUser: Defining roles was never this easy
+  %body.wrapper
+    %header
+      %h1 ReUser
+      %a(href="http://github.com/isaacsanders/reuser")
+        %img#forkme(style="position: absolute; top: 0; right: 0; border: 0;"
+              src="https://a248.e.akamai.net/assets.github.com/img/4c7dc970b89fd04b81c8e221ba88ff99a06c6b61/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67"
+              alt="Fork me on GitHub")
+      %strong
+        %blockquote Defining roles has never been so easy.
+    #twoway
+      .wrapper
+        %h2 What?
+        %ul
+          %li ReUser is a Ruby Internal DSL packaged as a Rubygem.
+          %li ReUser is an implementation of role-based authorization.
+      .wrapper
+        %h2 Why?
+        %ul
+          %li ReUser is a simple and expressive DSL.
+          %li It enables you to test for specific behaviors.
+          %li A developer shouldn't need to reimplement roles between projects.
+          %li Don't rely on an external source for permissions, describe them in your source code.
+      %h2 How?
+      %p Let me show you:
+      %script(src="https://gist.github.com/1306906.js")
+      %h2 Cool!
+      %p I hope that you will fork and contribute to ReUser.
+      %p Sincerely,
+      %span#signature Isaac Sanders
+    %footer
+
