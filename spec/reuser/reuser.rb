@@ -23,14 +23,6 @@ class TestReUser
     @role = TestReUser.role(name)
   end
 end
-REUSER_METHODS = [:roles,
-                  :role,
-                  :role?,
-                  :default,
-                  :can?,
-                  :cant?,
-                  :could?,
-                  :couldnt?].sort
 
 describe TestReUser do
   context "has included the ReUser module" do
