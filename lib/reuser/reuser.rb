@@ -22,20 +22,8 @@ module ReUser
           end
           role_name
         end
-
-        def default(name = nil)
-          if name
-            @@roles[:default] = @@roles[name]
-          else
-            @@roles[:default]
-          end
-        end
       end
       subclass.class_eval do
-
-        def role?(action)
-          @role == self.class.role(action)
-        end
 
         def can?(action)
           !!@role.can?(action)

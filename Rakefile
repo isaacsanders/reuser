@@ -16,9 +16,9 @@ end
 desc 'make (build and install the gem from gemspec)'
 task :make => [:build, :install]
 
-desc 'run all the specs in the `spec/` directory.'
-task :spec do
-  Dir.glob('./spec/reuser/**/*.rb').each do |file|
-    sh "rspec #{file}"
-  end
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_opts = '--color'
 end
+
+task :default => :spec

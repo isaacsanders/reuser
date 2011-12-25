@@ -2,8 +2,6 @@ require_relative('../reuser')
 
 module ReUser
   class Role
-    attr_reader :actions
-
     def initialize(name)
       @name = name
       @actions = {}
@@ -24,7 +22,13 @@ module ReUser
     end
 
     def could?(name, data)
-      actions[name].is_a?(Proc) ? actions[name].call(data) : true
+      if actions[name]
+        if actions[name].is_a?(Proc)
+          actions[name].call(data)
+        else
+          true
+        end
+      end
     end
 
     private

@@ -1,5 +1,4 @@
 require 'rspec'
-require 'pry'
 require_relative '../reuser'
 
 class TestReUser
@@ -16,10 +15,9 @@ class TestReUser
     end
     role :writer, :write
     role :sysadmin, [:write, :execute]
-    default(:user)
   end
 
-  def initialize(name = :default)
+  def initialize(name)
     @role = TestReUser.role(name)
   end
 end
@@ -38,9 +36,9 @@ describe TestReUser do
 
     context "has defined the :admin and :user roles," do
       context "is instantiated as test_ru" do
-        context "set :user to the default" do
+        context "with role :user" do
           before do
-            @test_ru = TestReUser.new
+            @test_ru = TestReUser.new(:user)
           end
           context " using the default role" do
             it "should not be able to write" do
