@@ -18,7 +18,7 @@ task :make => [:build, :install]
 
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |t|
-  t.rspec_opts = '--color'
+  t.rspec_opts = '--color --format=nested'
 end
 
 task :default => :spec
