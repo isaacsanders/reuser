@@ -21,4 +21,9 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts = '--color --format=nested'
 end
 
-task :default => :spec
+require 'cucumber/rake/task'
+Cucumber::Rake::Task.new(:features) do |t|
+  t.cucumber_opts = '--color'
+end
+
+task :default => [:spec, :features]
