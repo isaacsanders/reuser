@@ -26,4 +26,11 @@ Cucumber::Rake::Task.new(:features) do |t|
   t.cucumber_opts = '--color'
 end
 
+namespace :features do
+  desc 'runs features tagged as @focus'
+  Cucumber::Rake::Task.new(:focus) do |t|
+    t.cucumber_opts = '--tag @focus'
+  end
+end
+
 task :default => [:spec, :features]
