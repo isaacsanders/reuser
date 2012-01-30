@@ -7,13 +7,16 @@ module ReUser
       def roles &block
         @@roles ||= {}
         yield if block_given?
-        @@roles.values
+        @@roles.freeze
+        @@roles.keys
       end
 
       def role name
-        raise "Role '#{name}' is already defined" if @@roles[name]
-        @@roles[name] = ReUser::Role.new
+        @@roles[name] ||= ReUser::Role.new
       end
     end
+  end
+
+  def can? permission
   end
 end
