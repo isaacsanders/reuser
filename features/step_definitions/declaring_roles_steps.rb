@@ -1,5 +1,5 @@
 Given /^the following class:$/ do |class_code|
-  eval class_code, binding
+  eval class_code, binding, "feature_user_class"
 end
 
 When /^I access "([^"]*)"$/ do |access_code|
@@ -14,14 +14,14 @@ Then /^I should get an error$/ do
   @expected.should be_kind_of Exception
 end
 
-Then /^I should have an array of (\d+ ReUser::Roles?)$/ do |role_count|
+Then /^I should have an array of (\d+ roles?)$/ do |role_count|
   @expected.should have(role_count).items
   @expected.all? do |item|
-    item.should be_instance_of ReUser::Role
+    item.should be_instance_of Symbol
   end
 end
 
-Transform /(\d+) ReUser::Roles+/ do |role_count|
+Transform /(\d+) roles?/ do |role_count|
   Integer(role_count)
 end
 

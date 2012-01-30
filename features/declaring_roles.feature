@@ -15,7 +15,7 @@ Feature: Declaring Roles
     end
     """
     When I access "User.roles"
-    Then I should have an array of 1 ReUser::Role
+    Then I should have an array of 1 role
 
   Scenario: Declaring many roles
     Given the following class:
@@ -33,28 +33,9 @@ Feature: Declaring Roles
     end
     """
     When I access "User.roles"
-    Then I should have an array of 5 ReUser::Roles
+    Then I should have an array of 5 roles
 
-  Scenario: Declaring a role with permissions
-    Given the following class:
-    """
-    class User
-      include ReUser
-
-      roles do
-        role(:admin) do |admin|
-          admin.can :create
-          admin.can :read
-          admin.can :update
-          admin.can :delete
-        end
-      end
-    end
-    """
-    When I access "User.roles"
-    Then I should have an array of 1 ReUser::Role
-
-  Scenario: Declaring duplicate roles
+  Scenario: Declaring roles outside of a block raises an error
     Given the following class:
     """
     class User
@@ -65,5 +46,5 @@ Feature: Declaring Roles
       end
     end
     """
-    When I access "User.role(:admin)"
+    When I access "User.role(:user)"
     Then I should get an error
