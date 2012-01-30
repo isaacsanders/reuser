@@ -53,3 +53,17 @@ Feature: Declaring Roles
     """
     When I access "User.roles"
     Then I should have an array of 1 ReUser::Role
+
+  Scenario: Declaring duplicate roles
+    Given the following class:
+    """
+    class User
+      include ReUser
+
+      roles do
+        role :admin
+      end
+    end
+    """
+    When I access "User.role(:admin)"
+    Then I should get an error

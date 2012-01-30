@@ -3,7 +3,15 @@ Given /^the following class:$/ do |class_code|
 end
 
 When /^I access "([^"]*)"$/ do |access_code|
-  @expected = eval access_code
+  begin
+    @expected = eval access_code
+  rescue Exception => e
+    @expected = e
+  end
+end
+
+Then /^I should get an error$/ do
+  @expected.should be_kind_of Exception
 end
 
 Then /^I should have an array of (\d+ ReUser::Roles?)$/ do |role_count|
