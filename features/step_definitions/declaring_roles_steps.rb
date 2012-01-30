@@ -6,9 +6,11 @@ When /^I access "([^"]*)"$/ do |access_code|
   @expected = eval access_code
 end
 
-Then /^I should have an array of (\d+ ReUser::Roles+)$/ do |role_count|
+Then /^I should have an array of (\d+ ReUser::Roles?)$/ do |role_count|
   @expected.should have(role_count).items
-  @expected.all?(:role?).should be_true
+  @expected.all? do |item|
+    item.should be_instance_of ReUser::Role
+  end
 end
 
 Transform /(\d+) ReUser::Roles+/ do |role_count|

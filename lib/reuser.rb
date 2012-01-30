@@ -11,6 +11,7 @@ module ReUser
       end
 
       def role name
+        raise "Role '#{name}' is already defined" if @@roles[name]
         @@roles[name] = ReUser::Role.new
       end
     end

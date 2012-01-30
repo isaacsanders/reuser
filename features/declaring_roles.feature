@@ -17,6 +17,24 @@ Feature: Declaring Roles
     When I access "User.roles"
     Then I should have an array of 1 ReUser::Role
 
+  Scenario: Declaring many roles
+    Given the following class:
+    """
+    class User
+      include ReUser
+
+      roles do
+        role :admin
+        role :user
+        role :butcher
+        role :baker
+        role :candlestick_maker
+      end
+    end
+    """
+    When I access "User.roles"
+    Then I should have an array of 5 ReUser::Roles
+
   Scenario: Declaring a role with permissions
     Given the following class:
     """
