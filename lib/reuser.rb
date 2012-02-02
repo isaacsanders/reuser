@@ -11,12 +11,16 @@ module ReUser
         @@roles.keys
       end
 
-      def role name
-        @@roles[name] ||= ReUser::Role.new
+      def role name, &block
+        @@roles[name] ||= ReUser::Role.new name
+        role = @@roles[name]
+        yield(role) if block_given?
+        role
       end
     end
   end
 
   def can? permission
+    @role.can? permission
   end
 end
