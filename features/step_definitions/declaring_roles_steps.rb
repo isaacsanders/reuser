@@ -4,19 +4,19 @@ end
 
 When /^I access "([^"]*)"$/ do |access_code|
   begin
-    @expected = eval access_code
+    @actual = eval access_code
   rescue Exception => e
-    @expected = e
+    @actual = e
   end
 end
 
 Then /^I should get an error$/ do
-  @expected.should be_kind_of Exception
+  @actual.should be_kind_of Exception
 end
 
 Then /^I should have an array of (\d+ roles?)$/ do |role_count|
-  @expected.should have(role_count).items
-  @expected.all? do |item|
+  @actual.should have(role_count).items
+  @actual.all? do |item|
     item.should be_instance_of Symbol
   end
 end

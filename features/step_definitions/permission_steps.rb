@@ -9,3 +9,7 @@ end
 Then /^I learn that the user can't read$/ do
   @expected.should be_false
 end
+
+Then /^I learn that the user can read$/ do
+  @expected.should be_true
+end
