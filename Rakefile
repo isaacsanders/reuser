@@ -29,7 +29,7 @@ end
 namespace :features do
   desc 'runs features tagged as @focus'
   Cucumber::Rake::Task.new(:focus) do |t|
-    t.cucumber_opts = '--tag @focus'
+    t.cucumber_opts = '--color --tag @focus'
   end
 end
 
