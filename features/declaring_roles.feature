@@ -48,3 +48,17 @@ Feature: Declaring Roles
     """
     When I access "User.role(:user)"
     Then I should get an error
+
+  Scenario: Declaring roles with an array of permissions
+    Given the following class:
+    """
+    class User
+      include ReUser
+
+      roles do
+        role :admin, [:read, :write, :execute]
+      end
+    end
+    """
+    When I access "User.role(:admin).permissions"
+    Then I should know that an admin can read, write, and execute

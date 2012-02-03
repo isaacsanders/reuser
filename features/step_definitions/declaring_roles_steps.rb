@@ -14,6 +14,10 @@ Then /^I should get an error$/ do
   @actual.should be_kind_of Exception
 end
 
+Then /^I should know that an admin can read, write, and execute$/ do
+  @actual.should == [:read, :write, :execute]
+end
+
 Then /^I should have an array of (\d+ roles?)$/ do |role_count|
   @actual.should have(role_count).items
   @actual.all? do |item|

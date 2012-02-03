@@ -6,13 +6,16 @@ module ReUser
       @permissions.keys
     end
 
-    def initialize name
+    def initialize name, permissions=[]
       @name = name
       @permissions = {}
+      self.can *permissions
     end
 
-    def can permission
-      @permissions[permission] = lambda {|*args| true }
+    def can *permissions
+      permissions.each do |permission|
+        @permissions[permission] = lambda {|*args| true }
+      end
     end
 
     def can? permission

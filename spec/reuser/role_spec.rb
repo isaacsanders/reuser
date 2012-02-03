@@ -7,12 +7,18 @@ describe ReUser::Role do
     role
   end
 
-  it 'is initialized with a name' do
+  it 'is initialized with a name, and optionally an array of permissions' do
     role = ReUser::Role.new :admin
-    role.name.should === :admin
+    role.name.should == :admin
+    role.permissions.should == []
 
     role = ReUser::Role.new :user
-    role.name.should === :user
+    role.name.should == :user
+    role.permissions.should == []
+
+    role = ReUser::Role.new :user, [:read, :write]
+    role.name.should == :user
+    role.permissions.should == [:read, :write]
   end
 
   context 'shares its name and permissions' do

@@ -32,6 +32,10 @@ describe "Classes including ReUser" do
       lambda { subject.role(:admin) }.should_not raise_error
     end
 
+    it "takes a symbol, and an optional array" do
+      lambda { subject.role(:admin, [:read, :write]) }.should_not raise_error
+    end
+
     it "returns a ReUser::Role instance" do
       subject.role(:admin).should be_instance_of ReUser::Role
     end

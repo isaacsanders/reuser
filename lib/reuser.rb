@@ -8,13 +8,11 @@ module ReUser
       def roles &block
         @@roles ||= {}
         yield if block_given?
-        @@roles.freeze
-        @@roles.keys
+        @@roles.freeze.keys
       end
 
-      def role name, &block
-        @@roles[name] ||= ReUser::Role.new name
-        role = @@roles[name]
+      def role name, permissions=[], &block
+        role = ( @@roles[name] ||= ReUser::Role.new(name, permissions) )
         yield(role) if block_given?
         role
       end
