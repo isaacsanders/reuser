@@ -23,6 +23,7 @@ module ReUser
     end
 
     def could permission, &block
+      raise "#could requires a block" unless block_given?
       @permissions[permission] = block
     end
 

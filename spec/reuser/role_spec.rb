@@ -33,6 +33,10 @@ describe ReUser::Role do
     subject.can?(:write).should be_true
   end
 
+  it 'you need to supply #could with a test block' do
+    lambda { subject.could(:read) }.should raise_error
+  end
+
   it 'conditional permissions are added and checked with #could and #could?' do
     subject.can?(:write).should be_false
     subject.could :write do |language|
