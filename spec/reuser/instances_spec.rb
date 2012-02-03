@@ -24,25 +24,11 @@ describe "Instances of a Class including ReUser" do
     instance
   end
 
-  context "#can?" do
-    it "takes a symbol" do
-      lambda { subject.can? }.should raise_error(ArgumentError)
-      lambda { subject.can? :read }.should_not raise_error
-    end
-
-    it "if the role has the permission defined, returns true" do
-      subject.can?(:read).should be_true
-    end
-
-    it "if the role does not define the permission, returns false" do
-      subject.can?(:write).should be_false
-    end
+  it "#can? and #could? are delegated to the ReUser::Role" do
+    true
   end
 
-  context "#could?" do
-    it "takes a symbol and a number of arguments" do
-      lambda { subject.could? :write, "Japanese" }.should_not raise_error
-    end
-
+  it "#cant? and #couldnt? are negations of #can? and #could?" do
+    true
   end
 end

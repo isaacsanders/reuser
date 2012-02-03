@@ -63,5 +63,28 @@ Feature: Checking Permissions
     end
     """
     When I create an "admin" user
+      And I ask if the user could write "English"
+    Then I learn that they can
+
+  Scenario: Checking conditional permissions
+    Given the following class:
+    """
+    class User
+      include ReUser
+
+      roles do
+        role :admin do |admin|
+          admin.could :write do |language|
+            language == "English"
+          end
+        end
+      end
+
+      def initialize role_name
+        @role = User.role(role_name)
+      end
+    end
+    """
+    When I create an "admin" user
       And I ask if the user could write "Japanese"
     Then I learn that they can't

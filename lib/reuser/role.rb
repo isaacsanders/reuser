@@ -12,17 +12,19 @@ module ReUser
     end
 
     def can permission
-      @permissions[permission] = true
+      @permissions[permission] = lambda {|*args| true }
     end
 
     def can? permission
-      @permissions[permission]
+      @permissions[permission].is_a? Proc
     end
 
     def could permission, &block
+      @permissions[permission] = block
     end
 
     def could? permission, block_args
+      @permissions[permission].call(block_args)
     end
   end
 end

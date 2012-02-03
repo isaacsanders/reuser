@@ -22,5 +22,18 @@ describe ReUser::Role do
 
   it 'permissions are added and checked with #can and #can?' do
     subject.can?(:read).should be_true
+    subject.can?(:write).should be_false
+    subject.can(:write)
+    subject.can?(:write).should be_true
+  end
+
+  it 'conditional permissions are added and checked with #could and #could?' do
+    subject.can?(:write).should be_false
+    subject.could :write do |language|
+      language == "English"
+    end
+    subject.can?(:write).should be_true
+    subject.could?(:write, "Japanese").should be_false
+    subject.could?(:write, "English").should be_true
   end
 end
