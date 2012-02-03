@@ -1,5 +1,6 @@
+$: << 'lib/'
 require "rake"
-require_relative "lib/reuser/version"
+require "reuser/version"
 
 spec = Gem::Specification.new do |s|
   s.name = "reuser"

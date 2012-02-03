@@ -1,6 +1,6 @@
 desc 'build the .gem file from gemspec'
 task :build do
-  sh 'gem build reuser.gemspec'
+  sh 'gem build ./reuser.gemspec'
 end
 
 desc 'install the gem from .gem file'
