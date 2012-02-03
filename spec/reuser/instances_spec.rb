@@ -9,6 +9,9 @@ describe "Instances of a Class including ReUser" do
       roles do
         role :admin do |admin|
           admin.can :read
+          admin.could :write do |language|
+            language == "English"
+          end
         end
       end
     end
@@ -34,5 +37,12 @@ describe "Instances of a Class including ReUser" do
     it "if the role does not define the permission, returns false" do
       subject.can?(:write).should be_false
     end
+  end
+
+  context "#could?" do
+    it "takes a symbol and a number of arguments" do
+      lambda { subject.could? :write, "Japanese" }.should_not raise_error
+    end
+
   end
 end

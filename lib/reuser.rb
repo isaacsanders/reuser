@@ -3,6 +3,7 @@ require_relative "./reuser/role"
 module ReUser
 
   def self.included klass
+
     klass.instance_eval do
       def roles &block
         @@roles ||= {}
@@ -22,5 +23,17 @@ module ReUser
 
   def can? permission
     @role.can? permission
+  end
+
+  def cant? permission
+    !(can? permission)
+  end
+
+  def could? permission, block_args
+    @role.could? permission, block_args
+  end
+
+  def couldnt? permission, block_args
+    !(couldnt? permission, block_args)
   end
 end
