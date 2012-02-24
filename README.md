@@ -1,4 +1,4 @@
-#ReUser
+#ReUser [![Build Status](https://secure.travis-ci.org/isaacsanders/reuser.png?branch=master)](http://travis-ci.org/isaacsanders/reuser)
 ##Purpose
   Whenever you start a web app where a user has specific permissions, do you
   end up writing your own solution or using something that has brain-bending
