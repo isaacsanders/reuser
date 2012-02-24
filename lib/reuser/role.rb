@@ -1,5 +1,11 @@
 module ReUser
   class Role
+    attr_reader :name
+
+    def permissions
+      @permissions.keys
+    end
+
     def initialize name, permissions=[]
       @name = name
       @permissions = {}
