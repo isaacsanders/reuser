@@ -8,6 +8,7 @@ Feature: Checking Permissions
     """
     class User
       include ReUser
+      attr_reader :role
 
       roles do
         role :admin
@@ -27,6 +28,7 @@ Feature: Checking Permissions
     """
     class User
       include ReUser
+      attr_reader :role
 
       roles do
         role :admin do |admin|
@@ -48,6 +50,7 @@ Feature: Checking Permissions
     """
     class User
       include ReUser
+      attr_reader :role
 
       roles do
         role :admin do |admin|
@@ -71,6 +74,7 @@ Feature: Checking Permissions
     """
     class User
       include ReUser
+      attr_reader :role
 
       roles do
         role :admin do |admin|

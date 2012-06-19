@@ -20,7 +20,7 @@ module ReUser
   end
 
   def can? permission
-    @role.can? permission
+    self.role.can? permission
   end
 
   def cant? permission
@@ -28,10 +28,10 @@ module ReUser
   end
 
   def could? permission, block_args
-    @role.could? permission, block_args
+    self.role.could? permission, block_args
   end
 
   def couldnt? permission, block_args
-    !(couldnt? permission, block_args)
+    !(could? permission, block_args)
   end
 end

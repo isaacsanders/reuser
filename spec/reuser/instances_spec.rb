@@ -14,21 +14,34 @@ describe "Instances of a Class including ReUser" do
           end
         end
       end
+
+      define_method :role do
+        kls.role(:admin)
+      end
     end
     kls
   end
 
   subject do
     instance = klass.new
-    instance.instance_variable_set(:@role, klass.role(:admin))
     instance
   end
 
-  it "#can? and #could? are delegated to the ReUser::Role" do
-    true
+  specify "#can? is delegated to the ReUser::Role" do
+    subject.role.should_receive :can?
+    subject.can? :read
   end
 
-  it "#cant? and #couldnt? are negations of #can? and #could?" do
-    true
+  specify "#could? is delegated to the ReUser::Role" do
+    subject.role.should_receive :could?
+    subject.could? :write, 'Farsi'
+  end
+
+  specify "#cant? is #can? negated" do
+    subject.can?(:write).should == !(subject.cant? :write)
+  end
+
+  specify "#couldnt? is #could? negated" do
+    subject.could?(:write, 'Farsi').should == !(subject.couldnt? :write, 'Farsi')
   end
 end

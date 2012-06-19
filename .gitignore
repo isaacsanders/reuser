@@ -1,3 +1,4 @@
 *.gem
 .rvmrc
 example
+Gemfile.lock

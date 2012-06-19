@@ -33,4 +33,17 @@ namespace :features do
   end
 end
 
+require 'flay_task'
+
+FlayTask.new do |t|
+  t.dirs = %w{lib}
+end
+
+
+require 'flog_task'
+
+FlogTask.new do |t|
+  t.dirs = %w{lib}
+end
+
 task :default => [:spec, :features]
