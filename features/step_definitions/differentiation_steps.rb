@@ -3,5 +3,5 @@ Then /^I should have know my role's name is "([^"]*)"$/ do |expected|
 end
 
 Then /^I should know that admins can read and write$/ do
-  @actual.should == [:read, :write]
+  @actual.should =~ [:read, :write]
 end
