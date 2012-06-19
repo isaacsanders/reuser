@@ -18,7 +18,7 @@ describe ReUser::Role do
 
     role = ReUser::Role.new :user, [:read, :write]
     role.name.should == :user
-    role.permissions.should == [:read, :write]
+    role.permissions.should =~ [:read, :write]
   end
 
   context 'shares its name and permissions' do
