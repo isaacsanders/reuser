@@ -14,8 +14,8 @@ Feature: Checking Permissions
         role :admin
       end
 
-      def initialize role_name
-        @role = User.role(role_name)
+      def initialize role
+        @role = role
       end
     end
     """
@@ -36,8 +36,8 @@ Feature: Checking Permissions
         end
       end
 
-      def initialize role_name
-        @role = User.role(role_name)
+      def initialize role
+        @role = role
       end
     end
     """
@@ -60,8 +60,8 @@ Feature: Checking Permissions
         end
       end
 
-      def initialize role_name
-        @role = User.role(role_name)
+      def initialize role
+        @role = role
       end
     end
     """
@@ -84,8 +84,8 @@ Feature: Checking Permissions
         end
       end
 
-      def initialize role_name
-        @role = User.role(role_name)
+      def initialize role
+        @role = role
       end
     end
     """

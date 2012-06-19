@@ -19,8 +19,12 @@ module ReUser
     end
   end
 
+  def permissions
+    self.class.role(self.role.to_sym).permissions
+  end
+
   def can? permission
-    self.role.can? permission
+    self.class.role(self.role.to_sym).can? permission
   end
 
   def cant? permission
@@ -28,7 +32,7 @@ module ReUser
   end
 
   def could? permission, block_args
-    self.role.could? permission, block_args
+    self.class.role(self.role.to_sym).could? permission, block_args
   end
 
   def couldnt? permission, block_args

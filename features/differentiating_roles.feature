@@ -49,4 +49,3 @@ Feature: Differentiating Roles
     """
     When I access "User.role(:user).name"
     Then I should have know my role's name is "user"
-

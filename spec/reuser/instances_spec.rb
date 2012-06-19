@@ -5,6 +5,7 @@ describe "Instances of a Class including ReUser" do
     kls = Class.new
     kls.instance_eval do
       include ReUser
+      attr_accessor :role
 
       roles do
         role :admin do |admin|
@@ -14,26 +15,33 @@ describe "Instances of a Class including ReUser" do
           end
         end
       end
-
-      define_method :role do
-        kls.role(:admin)
-      end
     end
     kls
   end
 
   subject do
     instance = klass.new
+    instance.role = :admin
     instance
   end
 
+  let(:admin_role) do
+    klass.role(:admin)
+  end
+
+  describe '#permissions' do
+    it 'returns the array of permissions on the subject\'s role' do
+      subject.permissions.should =~ [:read, :write]
+    end
+  end
+
   specify "#can? is delegated to the ReUser::Role" do
-    subject.role.should_receive :can?
+    admin_role.should_receive :can?
     subject.can? :read
   end
 
   specify "#could? is delegated to the ReUser::Role" do
-    subject.role.should_receive :could?
+    admin_role.should_receive :could?
     subject.could? :write, 'Farsi'
   end
 
