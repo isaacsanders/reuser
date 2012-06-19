@@ -1,3 +1,5 @@
+$: << 'lib'
+
 desc 'build the .gem file from gemspec'
 task :build do
   sh 'gem build ./reuser.gemspec'

@@ -1,4 +1,4 @@
-require_relative "./reuser/role"
+require "reuser/role"
 
 module ReUser
 

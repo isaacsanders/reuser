@@ -1,4 +1,4 @@
-require_relative '../spec_helper'
+require 'spec_helper'
 
 describe "Instances of a Class including ReUser" do
   let(:klass) do
