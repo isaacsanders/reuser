@@ -2,7 +2,9 @@
 
 ##Purpose
 
-Whenever you start a web app where a user has specific permissions, do you end up writing your own solution or using something that has brain-bending abstractions? If so, ReUser is the solution for you.
+Whenever you start a web app where a user has specific permissions, do you end
+up writing your own solution or using something that has brain-bending
+abstractions? If so, ReUser is the solution for you.
 
 ##Description
 
@@ -25,7 +27,7 @@ class User
   roles do
 
     # declare a role with the can method, taking a list of actions.
-    role(:admin).can :read, :write, :execute 
+    role(:admin).can :read, :write, :execute
 
     role :user do |usr| # pass a block, so you can
       usr.can :read
@@ -33,11 +35,11 @@ class User
       # declare a role, then declare a conditional action with could.
       # could takes a list of names, then assigns a test to them.
       # You can then ask your model:
-      ##usr.could?(:write, 'un-owned-file')
-      ###=> false
+      usr.could?(:write, 'un-owned-file')
+      #=> false
       # or
-      ##usr.could?(:write, 'owned-file')
-      ###=> true
+      usr.could?(:write, 'owned-file')
+      #=> true
       # could? will pass the second argument as the block's argument'
 
       usr.could :write do |file|
@@ -91,12 +93,17 @@ Please don't hesitate to open up an issue. You can even contribute! Which brings
 
 ##Contributing!
 
-This is open source, so I want others to help too. For now I have no plans on adding too much more to this project, as far as functionality is concerned, but don't let that get in your way of opening a request or forking the project and adding something. I just ask that:
+This is open source, so I want others to help too. For now I have no plans on
+adding too much more to this project, as far as functionality is concerned, but
+don't let that get in your way of opening a request or forking the project and
+adding something. I just ask that:
 
   - You are polite about it.
   - You test it.
   - You explain it, or it is easy to read.
 
-Following these will let us get along and make better software, quicker, and with less bugs.(hypothetically)
+Following these will let us get along and make better software, quicker, and
+with less bugs.(hypothetically)
 
-I am still working on the final syntax, but we are getting closer. If you have any suggestions on syntax, open a feature require
+I am still working on the final syntax, but we are getting closer. If you have
+any suggestions on syntax, open a feature require
