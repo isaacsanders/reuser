@@ -15,7 +15,7 @@ module ReUser
 
     def role(name)
       @@roles.fetch(name.to_sym)
-    rescue KeyError, IndexError
+    rescue ::IndexError
       raise RoleNotDefined.new(name)
     end
   end
