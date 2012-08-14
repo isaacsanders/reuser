@@ -18,6 +18,8 @@ end
 desc 'make (build and install the gem from gemspec)'
 task :make => [:build, :install]
 
+task :release => [:build, :push]
+
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts = '--color --format=nested'
