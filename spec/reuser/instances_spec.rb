@@ -29,12 +29,6 @@ describe "Instances of a Class including ReUser" do
     klass.role(:admin)
   end
 
-  describe '#permissions' do
-    it 'returns the array of permissions on the subject\'s role' do
-      subject.permissions.should =~ [:read, :write]
-    end
-  end
-
   specify "#can? is delegated to the ReUser::Role" do
     admin_role.should_receive :can?
     subject.can? :read

@@ -1,41 +1,42 @@
-require "reuser/role"
+require 'reuser/role'
+require 'reuser/role_definition'
+require 'reuser/errors'
 
 module ReUser
-
-  def self.included klass
-
-    klass.instance_eval do
-      def roles &block
-        @@roles ||= {}
-        yield if block_given?
-        @@roles.freeze.keys
+  module ClassMethods
+    def roles &definition_block
+      if block_given?
+        definition = ReUser::RoleDefinition.new(definition_block)
+        @@roles = definition.roles
+      else
+        @@roles.keys
       end
+    end
 
-      def role name, permissions=[], &block
-        role = ( @@roles[name] ||= ReUser::Role.new(name, permissions) )
-        yield(role) if block_given?
-        role
-      end
+    def role(name)
+      @@roles.fetch(name.to_sym)
+    rescue KeyError
+      raise RoleNotDefined.new(name)
     end
   end
 
-  def permissions
-    self.class.role(self.role.to_sym).permissions
+  def self.included(base)
+    base.extend ReUser::ClassMethods
   end
 
   def can? permission
-    self.class.role(self.role.to_sym).can? permission
+    self.class.role(self.role).can? permission
   end
 
   def cant? permission
-    !(can? permission)
+    !can?(permission)
   end
 
   def could? permission, block_args
-    self.class.role(self.role.to_sym).could? permission, block_args
+    self.class.role(self.role).could? permission, block_args
   end
 
   def couldnt? permission, block_args
-    !(could? permission, block_args)
+    !could?(permission, block_args)
   end
 end
