@@ -1,5 +1,3 @@
-require 'rake'
-require 'rake/dsl_definition'
 $: << 'lib'
 
 desc 'build the .gem file from gemspec'
@@ -20,8 +18,10 @@ end
 desc 'make (build and install the gem from gemspec)'
 task :make => [:build, :install]
 
+desc 'release the gem'
 task :release => [:build, :push]
 
+desc 'run the specs'
 task :spec do
   sh 'rspec --color --format=nested'
 end
@@ -29,26 +29,6 @@ end
 require 'cucumber/rake/task'
 Cucumber::Rake::Task.new(:features) do |t|
   t.cucumber_opts = '--color'
-end
-
-namespace :features do
-  desc 'runs features tagged as @focus'
-  Cucumber::Rake::Task.new(:focus) do |t|
-    t.cucumber_opts = '--color --tag @focus'
-  end
-end
-
-require 'flay_task'
-
-FlayTask.new do |t|
-  t.dirs = %w{lib}
-end
-
-
-require 'flog_task'
-
-FlogTask.new do |t|
-  t.dirs = %w{lib}
 end
 
 task :default => [:spec, :features]
