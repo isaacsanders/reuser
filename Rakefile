@@ -1,3 +1,5 @@
+require 'rake'
+require 'rake/dsl_definition'
 $: << 'lib'
 
 desc 'build the .gem file from gemspec'
@@ -20,9 +22,8 @@ task :make => [:build, :install]
 
 task :release => [:build, :push]
 
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.rspec_opts = '--color --format=nested'
+task :spec do
+  sh 'rspec --color --format=nested'
 end
 
 require 'cucumber/rake/task'
