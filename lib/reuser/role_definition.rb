@@ -1,3 +1,5 @@
+require 'reuser/role'
+
 module ReUser
   class RoleDefinition
     def initialize(definition)
@@ -10,8 +12,8 @@ module ReUser
     end
 
     def role name, permissions=[], &block
-      role = ReUser::Role.new(name, permissions)
-      yield(role) if block_given?
+      role = ReUser::Role.new(*permissions)
+      role.instance_eval &block if block_given?
       @roles[name] = role
     end
   end

@@ -1,4 +1,3 @@
-require 'reuser/role'
 require 'reuser/role_definition'
 require 'reuser/errors'
 
@@ -32,11 +31,14 @@ module ReUser
     !can?(permission)
   end
 
-  def could? permission, block_args
-    self.class.role(self.role).could? permission, block_args
+  def could? permission, *block_args
+    if block_args.empty?
+      block_args << self
+    end
+    self.class.role(self.role).could? permission, *block_args
   end
 
-  def couldnt? permission, block_args
-    !could?(permission, block_args)
+  def couldnt? permission, *block_args
+    !could?(permission, *block_args)
   end
 end

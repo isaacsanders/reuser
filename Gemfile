@@ -7,4 +7,8 @@ group :test, :development do
   gem 'flog'
   gem "cucumber"
   gem "rspec"
+  gem 'pry'
+  gem 'simplecov'
 end
+
+gemspec

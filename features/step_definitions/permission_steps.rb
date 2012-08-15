@@ -7,7 +7,7 @@ When /^I create an? "([^"]*)" user$/ do |role_name|
 end
 
 When /^I ask if the user can read$/ do
-  @expected = !!(@user.can? :read)
+  @expected = !!(@user.could? :read)
 end
 
 Then /^I learn that they can't$/ do

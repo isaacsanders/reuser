@@ -31,8 +31,8 @@ Feature: Checking Permissions
       attr_reader :role
 
       roles do
-        role :admin do |admin|
-          admin.can :read
+        role :admin do
+          can :read
         end
       end
 
@@ -53,8 +53,8 @@ Feature: Checking Permissions
       attr_reader :role
 
       roles do
-        role :admin do |admin|
-          admin.could :write do |language|
+        role :admin do
+          could :write do |language|
             language == "English"
           end
         end
@@ -77,8 +77,8 @@ Feature: Checking Permissions
       attr_reader :role
 
       roles do
-        role :admin do |admin|
-          admin.could :write do |language|
+        role :admin do
+          could :write do |language|
             language == "English"
           end
         end
@@ -90,5 +90,56 @@ Feature: Checking Permissions
     end
     """
     When I create an "admin" user
-      And I ask if the user could write "Japanese"
+    And I ask if the user could write "Japanese"
     Then I learn that they can't
+
+  Scenario: Checking permissions with a predicate
+    Given the following class:
+    """
+    class User
+      include ReUser
+      attr_reader :role
+
+      roles do
+        role :child do
+          could :read, &:old_enough?
+        end
+      end
+
+      def initialize role
+        @role = role
+        @age = 6
+      end
+
+      def old_enough?
+        @age > 5
+      end
+    end
+    """
+    When I create a "child" user
+    And I ask if the user can read
+    Then I learn that they can
+
+  Scenario: Checking permissions without state
+    Given the following class:
+    """
+    class User
+      include ReUser
+      attr_reader :role
+
+      roles do
+        role :child do
+          could :read do
+            true
+          end
+        end
+      end
+
+      def initialize role
+        @role = role
+      end
+    end
+    """
+    When I create a "child" user
+    And I ask if the user can read
+    Then I learn that they can

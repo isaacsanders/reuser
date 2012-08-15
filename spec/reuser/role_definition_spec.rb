@@ -11,7 +11,6 @@ describe ReUser::RoleDefinition do
 
   describe '#role' do
     it "takes a symbol, and an optional array" do
-      puts subject
       lambda { subject.role(:admin, [:read, :write]) }.should_not raise_error
     end
   end

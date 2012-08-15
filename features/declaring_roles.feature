@@ -60,5 +60,4 @@ Feature: Declaring Roles
       end
     end
     """
-    When I access "User.role(:admin).permissions"
     Then I should know that an admin can read, write, and execute

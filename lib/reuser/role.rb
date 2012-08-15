@@ -1,13 +1,6 @@
 module ReUser
   class Role
-    attr_reader :name
-
-    def permissions
-      @permissions.keys
-    end
-
-    def initialize name, permissions=[]
-      @name = name
+    def initialize *permissions
       @permissions = {}
       self.can *permissions
     end
@@ -19,7 +12,7 @@ module ReUser
     end
 
     def can? permission
-      @permissions[permission].is_a? Proc
+      @permissions.has_key?(permission) && @permissions[permission].is_a?(Proc)
     end
 
     def could permission, &block
@@ -27,8 +20,13 @@ module ReUser
       @permissions[permission] = block
     end
 
-    def could? permission, block_args
-      @permissions[permission].call(block_args)
+    def could? permission, *block_args
+      if @permissions.has_key?(permission)
+        @permissions[permission].call(*block_args)
+      else
+        false
+      end
     end
+    alias_method :able_to?, :could?
   end
 end

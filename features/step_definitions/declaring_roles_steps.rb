@@ -15,7 +15,9 @@ Then /^I should get an error$/ do
 end
 
 Then /^I should know that an admin can read, write, and execute$/ do
-  @actual.should =~ [:read, :write, :execute]
+  [:read, :write, :execute].each do |permission|
+    User.role(:admin).should be_able_to permission
+  end
 end
 
 Then /^I should have an array of (\d+ roles?)$/ do |role_count|
