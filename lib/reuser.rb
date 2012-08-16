@@ -37,6 +37,7 @@ module ReUser
     end
     self.class.role(self.role).could? permission, *block_args
   end
+  alias_method :able_to?, :could?
 
   def couldnt? permission, *block_args
     !could?(permission, *block_args)
