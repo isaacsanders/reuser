@@ -106,4 +106,4 @@ Following these will let us get along and make better software, quicker, and
 with less bugs.(hypothetically)
 
 I am still working on the final syntax, but we are getting closer. If you have
-any suggestions on syntax, open a feature require
+any suggestions on syntax, open a feature request.
